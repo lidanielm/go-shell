@@ -16,8 +16,8 @@ func main() {
 	for running {
 		fmt.Fprint(os.Stdout, "$ ")
 		input, _ := bufio.NewReader(os.Stdin).ReadString('\n')
-		if input != "exit 0\n" {
-			fmt.Fprint(os.Stdout, "Command executed\n")
+		if input == "exit 0\n" {
+			running = false
 		} else {
 			fmt.Fprint(os.Stdout, input[:len(input) - 1] + ": command not found\n")	
 		}
