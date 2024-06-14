@@ -13,6 +13,7 @@ func main() {
 	// fmt.Fprint(os.Stdout, "$ ")	
 		
 	running := true
+	commands := []string{"echo", "type", "exit"}
 	// Wait for user input
 	for running {
 		fmt.Fprint(os.Stdout, "$ ")
@@ -22,6 +23,17 @@ func main() {
 			running = false
 		} else if args[0] == "echo" {
 			fmt.Fprint(os.Stdout, strings.Join(args[1:], " ") + "\n")
+		} else if args[0] == "type" {
+			found := false
+			for _, command := range commands {
+				if args[1] == command {
+					fmt.Fprint(os.Stdout, command + " is a shell builtin\n")
+					found = true
+				}
+			}
+			if !found {
+				fmt.Fprint(os.Stdout, args[0] + ": not found\n")
+			}
 		} else {
 			fmt.Fprint(os.Stdout, input[:len(input) - 1] + ": command not found\n")	
 		}
