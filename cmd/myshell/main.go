@@ -32,7 +32,7 @@ func main() {
 				}
 			}
 			if !found {
-				fmt.Fprint(os.Stdout, args[0] + ": not found\n")
+				fmt.Fprint(os.Stdout, args[1] + ": not found\n")
 			}
 		} else {
 			fmt.Fprint(os.Stdout, input[:len(input) - 1] + ": command not found\n")	
