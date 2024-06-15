@@ -69,7 +69,7 @@ func main() {
 			// } else {
 			// 	fmt.Fprint(os.Stdout, "cd: " + args[1] + ": No such file or directory\n")
 			// }
-			targetPath := args[0]
+			targetPath := args[1]
 			isAbsolute := targetPath[0] == '/'
 			if !isAbsolute {
 				targetPath = filepath.Join(os.Getenv("PWD"), targetPath)
