@@ -54,10 +54,11 @@ func main() {
 			// Executable
 			file, _ := exec.LookPath(args[0])
 			if file != "" {
-				out, err := exec.Command(args[0], args[1:]...).Output()
-				if err != nil {
-					executed = true
-				}
+				cmd := exec.Command(args[0], args[1:]...)
+				cmd.Stdout = os.Stdout
+				cmd.Stderr = os.Stderr
+				cmd.Run()
+				executed = true
 			} else {
 				fmt.Fprint(os.Stdout, args[0] + ": not found\n")
 			}
