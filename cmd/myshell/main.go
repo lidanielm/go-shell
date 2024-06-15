@@ -100,7 +100,7 @@ func changeDirRelative(dir string) {
 		dir = dir[2:]
 	} else if dir[:3] == "../" {
 		currDirs := strings.Fields(getWD())
-		if len(dirs) > 1 {
+		if len(currDirs) > 1 {
 			parDir := strings.Join(currDirs[:len(currDirs) - 1], "/")
 			err := os.Chdir(parDir)
 			if err != nil {
