@@ -71,6 +71,7 @@ func main() {
 			targetPath := args[1]
 			if targetPath == "~" {
 				targetPath = os.Getenv("HOME")
+				os.Setenv("PWD", targetPath)
 				continue
 			}
 			isAbsolute := targetPath[0] == '/'
