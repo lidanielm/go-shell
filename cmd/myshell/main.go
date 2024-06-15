@@ -67,11 +67,17 @@ func main() {
 				if args[1][:2] == "./" {
 					dir := getWD()
 					err := os.Chdir(dir + "/" + args[1])
+					if err != nil {
+						fmt.Fprint(os.Stdout, "cd: " + args[1] + ": No such file or directory\n")	
+					}
 				} else if args[1][:3] == "../" {
 					dirs := strings.Fields(getWD())
 					if len(dirs) > 1 {
 						parDir := strings.Join(dirs[:len(dirs) - 1], "/")
 						err := os.Chdir(parDir)
+						if err != nil {
+							fmt.Fprint(os.Stdout, "cd: " + args[1] + ": No such file or directory\n")	
+						}
 					} else {
 						fmt.Fprint(os.Stdout, "cd: " + args[1] + ": No such file or directory\n")
 					}
