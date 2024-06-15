@@ -53,20 +53,29 @@ func main() {
 			dir := getWD()
 			fmt.Fprint(os.Stdout, dir + "\n")
 		} else if args[0] == "cd" {
-			if args[1][0] == '/' {
-				// Absolute
-				err := os.Chdir(args[1])
-				if err != nil {
-					fmt.Fprint(os.Stdout, "cd: " + args[1] + ": No such file or directory\n")	
-				}
-			} else if args[1] == "~" {
-				// Home
-				os.Chdir(homeDir)
-			} else if args[1][0] == '.' {
-				// Relative
-				changeDirRelative(args[1])
-			} else {
-				fmt.Fprint(os.Stdout, "cd: " + args[1] + ": No such file or directory\n")
+			// if args[1][0] == '/' {
+			// 	// Absolute
+			// 	err := os.Chdir(args[1])
+			// 	if err != nil {
+			// 		fmt.Fprint(os.Stdout, "cd: " + args[1] + ": No such file or directory\n")	
+			// 	}
+			// } else if args[1] == "~" {
+			// 	// Home
+			// 	os.Chdir(homeDir)
+			// } else if args[1][0] == '.' {
+			// 	// Relative
+			// 	changeDirRelative(args[1])
+			// } else {
+			// 	fmt.Fprint(os.Stdout, "cd: " + args[1] + ": No such file or directory\n")
+			// }
+			targetPath := args
+			isAbsolute := targetPath[0] == '/'
+			if !isAbsolute {
+				targetPath = filepath.Join(os.Getenv("PWD"), targetPath)
+			}
+			if _, err := os.Stat(targetPath); errors.Is(err, os.ErrNotExist) {
+				fmt.Printf("%s: No such file or directory\n", targetPath)
+				return
 			}
 		} else {
 			// Executable
@@ -90,6 +99,32 @@ func getWD() string {
 }
 
 func changeDirRelative(dir string) {
+	while dir[0] == '.' {
+		if dir[:2] == "./" {
+			curr := getWD()
+			err := os.Chdir(curr + "/" + dir)
+			if err != nil {
+				fmt.Fprint(os.Stdout, "cd: " + dir + ": No such file or directory\n")	
+				return
+			}
+			dir = dir[2:]
+		} else if dir[:3] == "../" {
+			currDirs := strings.Fields(getWD())
+			if len(currDirs) > 1 {
+				parDir := strings.Join(currDirs[:len(currDirs) - 1], "/")
+				err := os.Chdir(parDir)
+				if err != nil {
+					fmt.Fprint(os.Stdout, "cd: " + dir + ": No such file or directory\n")
+					return
+				}
+			} else {
+				fmt.Fprint(os.Stdout, "cd: " + dir + ": No such file or directory\n")
+				return
+			}
+			dir = dir[3:]
+		}
+	}
+
 	if dir[:2] == "./" {
 		curr := getWD()
 		err := os.Chdir(curr + "/" + dir)
