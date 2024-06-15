@@ -68,7 +68,7 @@ func main() {
 			// } else {
 			// 	fmt.Fprint(os.Stdout, "cd: " + args[1] + ": No such file or directory\n")
 			// }
-			targetPath := args
+			targetPath := args[0]
 			isAbsolute := targetPath[0] == '/'
 			if !isAbsolute {
 				targetPath = filepath.Join(os.Getenv("PWD"), targetPath)
@@ -96,60 +96,4 @@ func main() {
 func getWD() string {
 	dir, _ := os.Getwd()
 	return dir
-}
-
-func changeDirRelative(dir string) {
-	while dir[0] == '.' {
-		if dir[:2] == "./" {
-			curr := getWD()
-			err := os.Chdir(curr + "/" + dir)
-			if err != nil {
-				fmt.Fprint(os.Stdout, "cd: " + dir + ": No such file or directory\n")	
-				return
-			}
-			dir = dir[2:]
-		} else if dir[:3] == "../" {
-			currDirs := strings.Fields(getWD())
-			if len(currDirs) > 1 {
-				parDir := strings.Join(currDirs[:len(currDirs) - 1], "/")
-				err := os.Chdir(parDir)
-				if err != nil {
-					fmt.Fprint(os.Stdout, "cd: " + dir + ": No such file or directory\n")
-					return
-				}
-			} else {
-				fmt.Fprint(os.Stdout, "cd: " + dir + ": No such file or directory\n")
-				return
-			}
-			dir = dir[3:]
-		}
-	}
-
-	if dir[:2] == "./" {
-		curr := getWD()
-		err := os.Chdir(curr + "/" + dir)
-		if err != nil {
-			fmt.Fprint(os.Stdout, "cd: " + dir + ": No such file or directory\n")	
-			return
-		}
-		dir = dir[2:]
-	} else if dir[:3] == "../" {
-		currDirs := strings.Fields(getWD())
-		if len(currDirs) > 1 {
-			parDir := strings.Join(currDirs[:len(currDirs) - 1], "/")
-			err := os.Chdir(parDir)
-			if err != nil {
-				fmt.Fprint(os.Stdout, "cd: " + dir + ": No such file or directory\n")
-				return
-			}
-		} else {
-			fmt.Fprint(os.Stdout, "cd: " + dir + ": No such file or directory\n")
-			return
-		}
-		dir = dir[3:]
-	}
-	if dir == "" {
-		return
-	}
-	changeDirRelative(dir)
 }
