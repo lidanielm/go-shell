@@ -56,7 +56,7 @@ func fileExists(path string, cmd string) bool {
 			return true
 		}
 		if file.IsDir() {
-			return fileExists(path + "/" + file.Name())
+			return fileExists(path + "/" + file.Name(), cmd)
 		}
 	}
 	return false
