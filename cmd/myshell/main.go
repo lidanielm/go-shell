@@ -55,7 +55,10 @@ func main() {
 		} else if args[0] == "cd" {
 			// Absolute
 			if args[1][0] == '/' {
-				os.Chdir(args[1])
+				err := os.Chdir(args[1])
+				if err != nil {
+					fmt.Fprint(os.Stdout, "cd: " + args[1] + ": No such file or directory\n")	
+				}
 			} else if args[1] == "~" {
 				os.Chdir(homeDir)
 			} else {
