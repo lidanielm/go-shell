@@ -20,13 +20,10 @@ func main() {
 		fmt.Fprint(os.Stdout, "$ ")
 		input, _ := bufio.NewReader(os.Stdin).ReadString('\n')
 		args := strings.Fields(input)
-		executed := false
 		if input == "exit 0\n" {
 			running = false
-			executed = true
 		} else if args[0] == "echo" {
 			fmt.Fprint(os.Stdout, strings.Join(args[1:], " ") + "\n")
-			executed = true
 		} else if args[0] == "type" {
 			found := false
 
@@ -49,6 +46,7 @@ func main() {
 			// If not found, print error message
 			if !found {
 				fmt.Fprint(os.Stdout, args[1] + ": not found\n")
+				continue
 			}
 		} else {
 			// Executable
@@ -58,14 +56,10 @@ func main() {
 				cmd.Stdout = os.Stdout
 				cmd.Stderr = os.Stderr
 				cmd.Run()
-				executed = true
+				continue
 			} else {
 				fmt.Fprint(os.Stdout, args[0] + ": not found\n")
 			}
-		}
-
-		if !executed {
-			fmt.Fprint(os.Stdout, input[:len(input) - 1] + ": command not found\n")	
 		}
 	}
 }
