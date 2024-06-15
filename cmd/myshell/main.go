@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"lookup"
 )
 
 func main() {
@@ -34,7 +35,7 @@ func main() {
 				}
 			}
 			// Check if the file exists
-			if fileExists(path, args[1]) {
+			if LookPath(args[1]) != "" {
 				fmt.Fprint(os.Stdout, args[1] + " is " + path + "\n")
 				found = true
 			}
