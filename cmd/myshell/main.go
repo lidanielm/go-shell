@@ -6,14 +6,13 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"lookup"
+	"os/exec"
 )
 
 func main() {
 	// Uncomment this block to pass the first stage
 	// fmt.Fprint(os.Stdout, "$ ")	
 	
-	path := os.Args[0]
 	running := true
 	commands := []string{"echo", "type", "exit"}
 	// Wait for user input
@@ -27,38 +26,29 @@ func main() {
 			fmt.Fprint(os.Stdout, strings.Join(args[1:], " ") + "\n")
 		} else if args[0] == "type" {
 			found := false
+
 			// Check if the command is a shell builtin
 			for _, command := range commands {
 				if args[1] == command {
 					fmt.Fprint(os.Stdout, command + " is a shell builtin\n")
 					found = true
+					continue
 				}
 			}
+
 			// Check if the file exists
-			if LookPath(args[1]) != "" {
-				fmt.Fprint(os.Stdout, args[1] + " is " + path + "\n")
-				found = true
+			file, _ := exec.LookPath(args[1])
+			if file != "" && !found {
+				fmt.Fprint(os.Stdout, args[1] + " is " + file + "\n")
+				continue
 			}
+
+			// If not found, print error message
 			if !found {
 				fmt.Fprint(os.Stdout, args[1] + ": not found\n")
 			}
 		} else {
 			fmt.Fprint(os.Stdout, input[:len(input) - 1] + ": command not found\n")	
 		}
-		
 	}
-
-}
-
-func fileExists(path string, cmd string) bool {
-	files, _ := os.ReadDir(path)
-	for _, file := range files {
-		if file.Name() == cmd {
-			return true
-		}
-		if file.IsDir() {
-			return fileExists(path + "/" + file.Name(), cmd)
-		}
-	}
-	return false
 }
