@@ -78,6 +78,7 @@ func main() {
 				fmt.Printf("%s: No such file or directory\n", targetPath)
 				return
 			}
+			os.Setenv("PWD", targetPath)
 		} else {
 			// Executable
 			file, _ := exec.LookPath(args[0])
