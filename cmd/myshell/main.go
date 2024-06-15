@@ -56,6 +56,8 @@ func main() {
 			// Absolute
 			if args[1][0] == '/' {
 				os.Chdir(args[1])
+			} else if args[1] == "~" {
+				os.Chdir(homeDir)
 			}
 		} else {
 			// Executable
