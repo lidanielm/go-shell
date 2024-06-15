@@ -8,6 +8,7 @@ import (
 	"strings"
 	"os/exec"
 	"path/filepath"
+	"errors"
 )
 
 func main() {
