@@ -51,8 +51,7 @@ func main() {
 				continue
 			}
 		} else if args[0] == "pwd" {
-			dir := getWD()
-			fmt.Fprint(os.Stdout, dir + "\n")
+			fmt.Fprint(os.Stdout, os.Getenv("PWD") + "\n")
 		} else if args[0] == "cd" {
 			// if args[1][0] == '/' {
 			// 	// Absolute
