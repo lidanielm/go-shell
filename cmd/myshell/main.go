@@ -58,6 +58,8 @@ func main() {
 				os.Chdir(args[1])
 			} else if args[1] == "~" {
 				os.Chdir(homeDir)
+			} else {
+				fmt.Fprint(os.Stdout, "cd: " + args[1] + ": No such file or directory\n")
 			}
 		} else {
 			// Executable
