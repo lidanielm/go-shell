@@ -92,7 +92,7 @@ func getWD() string {
 func changeDirRelative(dir string) {
 	if dir[:2] == "./" {
 		curr := getWD()
-		err := os.Chdir(curr + "/" + args[1])
+		err := os.Chdir(curr + "/" + dir)
 		if err != nil {
 			fmt.Fprint(os.Stdout, "cd: " + dir + ": No such file or directory\n")	
 			return
@@ -104,11 +104,11 @@ func changeDirRelative(dir string) {
 			parDir := strings.Join(currDirs[:len(currDirs) - 1], "/")
 			err := os.Chdir(parDir)
 			if err != nil {
-				fmt.Fprint(os.Stdout, "cd: " + args[1] + ": No such file or directory\n")
+				fmt.Fprint(os.Stdout, "cd: " + dir + ": No such file or directory\n")
 				return
 			}
 		} else {
-			fmt.Fprint(os.Stdout, "cd: " + args[1] + ": No such file or directory\n")
+			fmt.Fprint(os.Stdout, "cd: " + dir + ": No such file or directory\n")
 			return
 		}
 		dir = dir[3:]
