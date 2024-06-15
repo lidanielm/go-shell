@@ -15,6 +15,7 @@ func main() {
 	
 	running := true
 	commands := []string{"echo", "type", "exit"}
+	homeDir := getWD()
 	// Wait for user input
 	for running {
 		fmt.Fprint(os.Stdout, "$ ")
@@ -49,8 +50,13 @@ func main() {
 				continue
 			}
 		} else if args[0] == "pwd" {
-			dir, _ := os.Getwd()
+			dir := getWD()
 			fmt.Fprint(os.Stdout, dir + "\n")
+		} else if args[0] == "cd" {
+			// Absolute
+			if args[1][0] == '/' {
+				os.Chdir(args[1])
+			}
 		} else {
 			// Executable
 			file, _ := exec.LookPath(args[0])
@@ -65,4 +71,9 @@ func main() {
 			}
 		}
 	}
+}
+
+func getWD() string {
+	dir, _ := os.Getwd()
+	return dir
 }
