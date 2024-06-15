@@ -64,7 +64,7 @@ func main() {
 				os.Chdir(homeDir)
 			} else if args[1][0] == '.' {
 				// Relative
-				
+				changeDirRelative(args[1])
 			} else {
 				fmt.Fprint(os.Stdout, "cd: " + args[1] + ": No such file or directory\n")
 			}
