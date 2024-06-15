@@ -48,6 +48,9 @@ func main() {
 				fmt.Fprint(os.Stdout, args[1] + ": not found\n")
 				continue
 			}
+		} else if args[0] == "pwd" {
+			dir, _ := os.Getwd()
+			fmt.Fprint(os.Stdout, dir + "\n")
 		} else {
 			// Executable
 			file, _ := exec.LookPath(args[0])
