@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 	"os/exec"
+	"path/filepath"
 )
 
 func main() {
@@ -15,7 +16,6 @@ func main() {
 	
 	running := true
 	commands := []string{"echo", "type", "exit"}
-	homeDir := getWD()
 	// Wait for user input
 	for running {
 		fmt.Fprint(os.Stdout, "$ ")
