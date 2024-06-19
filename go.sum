@@ -1,4 +1,14 @@
+github.com/JoaoDanielRufino/go-input-autocomplete v1.1.0 h1:FNqKY5QPEIsqD1L8MFWh+mcU/vIZT45n5/XIYuDUOQc=
+github.com/JoaoDanielRufino/go-input-autocomplete v1.1.0/go.mod h1:jbEOh6l6PzFysFEbqoooNDwTQwb9Oz8hBwMJh2CTVlI=
+github.com/azul3d/engine v0.0.0-20211024043305-793ea6c2839d h1:rjznNQwrhE00gPar+rWgoh2RFOOTlE8YL7K20ADJB/w=
+github.com/azul3d/engine v0.0.0-20211024043305-793ea6c2839d/go.mod h1:XJaK+eQA5QZRq/Y8jYtJnUGhqAfHxG3z2PgwiHvE2BA=
+github.com/azul3d/keyboard v0.0.0-20150117202442-d33cdbadad9d h1:NIjmtIAz5ttARksXPUXCzdG9MSWuZdfylqJkO3sKF2s=
+github.com/azul3d/keyboard v0.0.0-20150117202442-d33cdbadad9d/go.mod h1:E7XWOITHCrO5sdHZR5ogfDm2PxYkVqFRlC4c5GPBRis=
 github.com/eiannone/keyboard v0.0.0-20220611211555-0d226195f203 h1:XBBHcIb256gUJtLmY22n99HaZTz+r2Z51xUPi01m3wg=
 github.com/eiannone/keyboard v0.0.0-20220611211555-0d226195f203/go.mod h1:E1jcSv8FaEny+OP/5k9UxZVw9YFWGj7eI4KR/iOBqCg=
+github.com/mattn/go-runewidth v0.0.9 h1:Lm995f3rfxdpd6TSmuVCHVb/QhupuXlYr8sCI/QdE+0=
+github.com/mattn/go-runewidth v0.0.9/go.mod h1:H031xJmbD/WCDINGzjvQ9THkh0rPKHF+m2gUSrubnMI=
+github.com/nsf/termbox-go v1.1.1 h1:nksUPLCb73Q++DwbYUBEglYBRPZyoXJdrj5L+TkjyZY=
+github.com/nsf/termbox-go v1.1.1/go.mod h1:T0cTdVuOwf7pHQNtfhnEbzHbcNyCEcVU4YPpouCbVxo=
 golang.org/x/sys v0.21.0 h1:rF+pYz3DAGSQAxAu1CbC7catZg4ebC4UIeIhKxBZvws=
 golang.org/x/sys v0.21.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=

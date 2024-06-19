@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	// Uncomment this block to pass the first stage
 	"fmt"
 	"os"
@@ -9,67 +8,24 @@ import (
 	"os/exec"
 	"path/filepath"
 	"errors"
-	"github.com/eiannone/keyboard"
+	"bufio"
+	// "github.com/eiannone/keyboard"
+	// "os/signal"
+	"sort"
+	// input_autocomplete "github.com/JoaoDanielRufino/go-input-autocomplete"
+	// "github.com/azul3d/keyboard"
+	// termbox "github.com/nsf/termbox-go"
 )
 
 func main() {
 	running := true
+	// history := []string{}
 	// Wait for user input
 	for running {
-		fmt.Fprint(os.Stdout, "$ ")
-
-		// Read user input
-		if err := keyboard.Open(); err != nil {
-			panic(err)
-		}
-		defer func() {
-			_ = keyboard.Close()
-		}()
-		
-		inputWords := []string{}
-		currWord := ""
-		possibleCommands := []string{}
-		hasTabbed := false
-		commandIndex := 0
-	
-		for {
-			char, key, err := keyboard.GetKey()
-			if err != nil {
-				panic(err)
-			}
-
-			if key == keyboard.KeySpace {
-				currWord = ""
-				inputWords = append(inputWords, currWord)
-			} else { // check if char is not a special key
-				currWord += string(char)
-				fmt.Fprint(os.Stdout, string(char))
-			}
-			if key == keyboard.KeyEnter {
-				break
-			}
-			if key 
-
-			if key == keyboard.KeyTab {
-				// Autocomplete
-				if !hasTabbed {
-					possibleCommands = searchCMDPrefix(currWord)
-					if len(possibleCommands) > 0 {
-						currWord = possibleCommands[commandIndex]
-						fmt.Fprint(os.Stdout, "\r" + strings.Join(inputWords, " ") + " " + currWord)
-					}
-					hasTabbed = true
-				} else {
-					commandIndex = (commandIndex + 1) % len(possibleCommands)
-					currWord = possibleCommands[commandIndex]
-					fmt.Fprint(os.Stdout, "\r" + strings.Join(inputWords, " ") + " " + currWord)
-				}
-			}
-		}
-
+		fmt.Fprint(os.Stdout, os.Getenv("PWD") + " ~ $ ")
 		input, _ := bufio.NewReader(os.Stdin).ReadString('\n')
 		args := strings.Fields(input)
-		if input == "exit 0\n" {
+		if input == "exit 0" {
 			running = false
 		} else if args[0] == "echo" {
 			echoCmd(args)
@@ -79,6 +35,8 @@ func main() {
 			pwdCmd()
 		} else if args[0] == "cd" {
 			cdCmd(args)
+		} else if args[0] == "ls" {
+			lsCmd()
 		} else {
 			execCmd(args)
 		}
@@ -135,6 +93,7 @@ func searchCMDPrefix(prefix string) []string {
 		commands = append(commands, file)
 	}
 
+	sort.Strings(commands)
 	return commands
 }
 
@@ -166,4 +125,17 @@ func execCmd(args []string) {
 	} else {
 		fmt.Fprint(os.Stdout, args[0] + ": not found\n")
 	}
-} 
+}
+
+func lsCmd() {
+	// Get current directory
+	dir := os.Getenv("PWD")
+	// Open directory
+	d, _ := os.Open(dir)
+	// Read directory
+	files, _ := d.Readdir(-1)
+	// Print directory content
+	for _, file := range files {
+		fmt.Fprintln(os.Stdout, file.Name())
+	}
+}
